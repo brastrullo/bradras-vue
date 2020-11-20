@@ -1,11 +1,10 @@
 <template>
-  <div class="home">
+  <main class="mb-auto">
     <Hero />
-  </div>
+  </main>
 </template>
 
 <script>
-// @ is an alias to /src
 import Hero from '@/components/Hero.vue'
 
 export default {

@@ -6,7 +6,7 @@
       </li>
     </ul>
     <div class="w-screen text-center">
-      <Logo fill="#e2e8f0" width="24" class="mx-auto mt-4" />
+      <Logo fill="#e2e8f0" :width="24" class="mx-auto mt-4" />
       <small>{{ copyright }}</small>
     </div>
   </footer>

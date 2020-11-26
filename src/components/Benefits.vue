@@ -1,5 +1,5 @@
 <template>
-  <section class="m-8">
+  <section>
     <article class="my-48" v-for="benefit in benefits" :key="benefit.id">
       <p>{{ benefit.text }}</p>
     </article>

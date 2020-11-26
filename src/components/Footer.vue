@@ -1,11 +1,11 @@
 <template>
-  <footer class="flex flex-col place-content-end pt-4 bg-gray-900 bg">
+  <footer class="w-screen flex flex-col place-content-end pt-4 bg-gray-900 bg">
     <ul class="flex flex-col justify-start">
       <li class="my-1" v-for="link in navLinks" :key="link.id">
         <a class="focus:underline text-gray-300" :href="link.path">{{ link.text }}</a>
       </li>
     </ul>
-    <div class="w-screen text-center">
+    <div class="text-center">
       <Logo fill="#e2e8f0" :width="24" class="mx-auto mt-4" />
       <small>{{ copyright }}</small>
     </div>

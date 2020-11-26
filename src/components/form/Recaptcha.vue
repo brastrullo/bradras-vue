@@ -1,17 +1,15 @@
 <template>
-  <div id="recaptcha"></div>
+  <div id="recaptcha" class="transform flex scale-75 origin-top-right"></div>
 </template>
 
 <script>
 export default {
   name: "Benefits",
-  props: {
-    sitekey: String,
-    secret: String
-  },
   data() {
     return {
       mounted: false,
+      sitekey: process.env.VUE_APP_RECAPTCHA_SITE_KEY,
+      secret: process.env.VUE_APP_RECAPTCHA_SECRET,
     };
   },
   methods: {
@@ -26,6 +24,8 @@ export default {
                 size: "invisible",
                 badge: "inline",
                 callback: self.callback,
+                "expired-callback": self.error,
+                "error-callback": self.error,
               });
               this.mounted = true;
             } catch (error) {
@@ -37,26 +37,34 @@ export default {
         }, 1000);
       }
     },
-    validate() {
+    error(error) {
+      alert(JSON.stringify(error));
+      window.grecaptcha.reset();
+    },
+    reset() {
+      window.grecaptcha.reset();
+    },
+    execute() {
       window.grecaptcha.execute();
     },
     callback(response) {
-      const secret = this.secret;
-      const base = "https://www.google.com/recaptcha/api/siteverify";
-      const url = `${base}?secret=${secret}&response=${response}`;
-      async function verify() {
-        const res = await fetch(url, {
-          method: "POST",
-          mode: "no-cors",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        });
-        // const data = await res.json()
-        console.log({ res });
-        // if (data.success) {
-        //   this.submitForm()
-        // }
-      }
-      verify();
+      this.$emit('verify', response)
+      this.reset()
+      // const base = "https://www.google.com/recaptcha/api/siteverify";
+      // const url = `${base}?secret=${this.secret}&response=${response}`;
+      // async function verify() {
+      //   const res = await fetch(url, {
+      //     method: "POST",
+      //     mode: "no-cors",
+      //     headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      //   });
+      //   // const data = await res.json()
+      //   console.log({ res });
+      //   // if (data.success) {
+      //   //   this.submitForm()
+      //   // }
+      // }
+      // verify();
     },
   },
   mounted() {

@@ -4,6 +4,7 @@
 
 <script>
 export default {
+  name: "Chevron",
   props: {
     fill: {
       type: String,

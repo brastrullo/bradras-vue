@@ -4,6 +4,7 @@
 
 <script>
 export default {
+  name: "Logo",
   props: {
     fill: String,
     width: Number

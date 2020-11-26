@@ -1,6 +1,6 @@
 <template>
   <form
-    @submit.prevent="submitForm"
+    @submit.prevent="executeRecaptcha"
     v-if="!emailSent"
     class="flex flex-col justify-center h-screen md:mx-auto md:w-1/2 box-border mx-6 mt-4 mb-12"
   >
@@ -53,31 +53,35 @@
     >
       Submit
     </button>
+    <div class="my-4 flex flex-row justify-end">
+      <Recaptcha ref="recaptcha" @verify="submitForm"/>
+    </div>
   </form>
-  <div v-else>
-    <img src="" alt="" />
-    <p>Thanks for reaching out! I'll get back to your shortly.</p>
-  </div>
+  <MailSent v-else />
 </template>
 
 <script>
 import Input from "@/components/form/Input.vue";
 import Select from "@/components/form/Select.vue";
 import TextArea from "@/components/form/TextArea.vue";
+import Recaptcha from "@/components/form/Recaptcha.vue";
+import MailSent from "@/components/MailSent.vue";
 import {
   required,
   minLength,
   maxLength,
   email,
 } from "@vuelidate/validators";
-import emailjs, { init } from 'emailjs-com';
+// import emailjs, { init } from 'emailjs-com';
 
 export default {
   name: "Contact",
   components: {
     Input,
     Select,
-    TextArea
+    TextArea,
+    Recaptcha,
+    MailSent,
   },
   computed: {
     isSubmitReady() {
@@ -123,12 +127,31 @@ export default {
     }
   },
   methods: {
-    submitForm() {
+    executeRecaptcha() {
+      this.$refs.recaptcha.execute()
+    },
+    submitForm(response) {
+      console.log({response})
       if (this.isSubmitReady) {
-        init(this.appID)
-        emailjs.send('default_service', this.templateID, this.inputObj)
-        .then((result) => {
-            console.log('SUCCESS!', result.status, result.text, this.inputObj);
+        // init(this.appID)
+        let data = {
+          service_id: 'default_service',
+          template_id: this.templateID,
+          user_id: this.appID,
+          template_params: {
+            ...this.inputObj,
+            'g-recaptcha-response': response
+          }
+        };
+        fetch('https://api.emailjs.com/api/v1.0/email/send', {
+          method: 'POST',
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        }).then((result) => {
+            console.log('SUCCESS!', result.status, result.statusText, result.text, this.inputObj);
             this.name = "";
             this.email = "";
             this.budget = "";

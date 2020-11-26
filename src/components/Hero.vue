@@ -20,7 +20,7 @@ export default {
   name: "Hero",
   data() {
     return {
-      heroTitle: ["Dream Big.", "We Can Build It"],
+      heroTitle: ["Dream Big.", "We Can Build It."],
       heroSubtitle: "Creative Digital Solutions for you and your customers.",
       heroCTAText: "Let's Collab",
     };

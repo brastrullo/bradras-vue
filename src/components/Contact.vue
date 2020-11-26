@@ -125,10 +125,9 @@ export default {
   methods: {
     submitForm() {
       if (this.isSubmitReady) {
-        init("user_1xaXQ5O7JncGDW1UZxXLV");
-        // const templateID = 'template_frsrbyr'
-        const templateID = 'template_rsy7tuj'
-        emailjs.send('default_service', templateID, this.inputObj);
+        console.log(process.env)
+        init(this.appID)
+        emailjs.send('default_service', this.templateID, this.inputObj);
         console.log("sent", this.inputObj);
         this.name = "";
         this.email = "";
@@ -141,6 +140,8 @@ export default {
   },
   data() {
     return {
+      appID: process.env.VUE_APP_EMAILJS_APP_ID,
+      templateID: process.env.VUE_APP_EMAILJS_TEMPLATE_ID,
       emailSent: false,
       name: "",
       email: "",

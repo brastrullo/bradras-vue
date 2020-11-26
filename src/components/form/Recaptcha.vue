@@ -6,7 +6,8 @@
 export default {
   name: "Benefits",
   props: {
-    sitekey: String
+    sitekey: String,
+    secret: String
   },
   data() {
     return {
@@ -40,7 +41,7 @@ export default {
       window.grecaptcha.execute();
     },
     callback(response) {
-      const secret = "6Leedu0ZAAAAAC1xXnF6Ut4UE2C0IW7PxN06RS5T";
+      const secret = this.secret;
       const base = "https://www.google.com/recaptcha/api/siteverify";
       const url = `${base}?secret=${secret}&response=${response}`;
       async function verify() {

@@ -9,6 +9,7 @@ module.exports = {
       opacity: ['disabled'],
       pointerEvents: ['disabled', 'hover', 'focus'],
       backgroundColor: ['active', 'group-focus'],
+      textColor: ['active'],
     },
   },
   plugins: [],

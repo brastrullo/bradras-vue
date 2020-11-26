@@ -1,9 +1,9 @@
 <template>
-  <label :for="name" class="mb-4 relative focus-within:text-indigo-700 text-left flex flex-col justify-start appearance-none display-none text-xs">
+  <label :for="name" class="mb-4 relative text-transparent focus-within:text-indigo-600 text-left flex flex-col justify-start appearance-none display-none text-xs">
     <span class="pl-2">{{ label }}</span>
-  <div class="focus-within:border-indigo-700 text-base flex items-center border-b border-gray-900 pt-0 pb-1">
+  <div class="focus-within:border-indigo-600 text-base flex items-center border-b border-gray-900 pt-0 pb-1">
     <textarea
-      class="text-base w-full pl-2 pb-1"
+      class="text-base w-full pl-2 pb-1 text-gray-700 focus:text-indigo-500 focus:outline-none"
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
       :name="name"

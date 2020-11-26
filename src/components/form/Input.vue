@@ -1,9 +1,9 @@
 <template>
-  <label :for="name" class="mb-6 relative focus-within:text-indigo-700 text-left flex flex-col justify-start appearance-none display-none text-xs">
+  <label :for="name" class="mb-6 relative text-transparent focus-within:text-indigo-600 text-left flex flex-col justify-start appearance-none display-none text-xs">
     <span class="pl-2">{{ label }}</span>
-    <div class="focus-within:border-indigo-700 text-base flex items-center border-b border-gray-900 pt-0 pb-1">
+    <div class="focus-within:border-indigo-600 text-base flex items-center border-b border-gray-900 pt-0 pb-1">
       <input
-        class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 p-2 pb-0 leading-tight focus:outline-none"
+        class="focus:text-indigo-500 overflow-ellipsis overflow-hidden appearance-none bg-transparent border-none w-full text-gray-700 mr-3 p-2 pb-0 leading-tight focus:outline-none"
         :value="modelValue"
         @input="emitValue"
         :type="type"
@@ -21,9 +21,12 @@
 
 <style scoped>
   input:-webkit-autofill {
-      background-color: transparent !important;
-      box-shadow: 0 0 0 50px white inset;
-      -webkit-box-shadow: 0 0 0 50px white inset;
+    background-color: transparent !important;
+    box-shadow: 0 0 0 50px white inset;
+    -webkit-box-shadow: 0 0 0 50px white inset;
+  }
+  input:-webkit-autofill:focus {
+    -webkit-text-fill-color: rgba(79, 70, 229, 1);
   }
 </style>
 

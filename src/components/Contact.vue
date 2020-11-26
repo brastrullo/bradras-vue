@@ -2,7 +2,7 @@
   <form
     @submit.prevent="submitForm"
     v-if="!emailSent"
-    class="flex flex-col justify-center box-border mx-6 mt-4 mb-12"
+    class="flex flex-col justify-center h-screen md:mx-auto md:w-1/2 box-border mx-6 mt-4 mb-12"
   >
     <legend class="m-4">Contact</legend>
       <div class="flex md:flex-row flex-col justify-between">
@@ -95,7 +95,7 @@ export default {
         email: this.email,
         budget: this.budget,
         project: this.project,
-        message: this.message,
+        message: this.message === "" ? '(No Message)' : this.message,
       };
     },
   },
@@ -125,16 +125,20 @@ export default {
   methods: {
     submitForm() {
       if (this.isSubmitReady) {
-        console.log(process.env)
         init(this.appID)
-        emailjs.send('default_service', this.templateID, this.inputObj);
-        console.log("sent", this.inputObj);
-        this.name = "";
-        this.email = "";
-        this.budget = "";
-        this.project = "";
-        this.message = "";
-        this.emailSent = true;
+        emailjs.send('default_service', this.templateID, this.inputObj)
+        .then((result) => {
+            console.log('SUCCESS!', result.status, result.text, this.inputObj);
+            this.name = "";
+            this.email = "";
+            this.budget = "";
+            this.project = "";
+            this.message = "";
+            this.emailSent = true;
+        }, (error) => {
+            console.log('FAILED...', error);
+            alert(error)
+        });
       }
     },
   },
